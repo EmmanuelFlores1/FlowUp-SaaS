@@ -1,10 +1,9 @@
 
 'use client'
 
-export const dynamic = 'force-dynamic'
-import { useState } from 'react'
+import { useState, useMemo } from 'react'
 import { useRouter } from 'next/navigation'
-import { createClient } from '@/lib/supabase/client'
+import { createBrowserClient } from '@supabase/ssr'
 import {
   Mail,
   Lock,
@@ -69,6 +68,13 @@ export default function RegisterPage() {
   const [success, setSuccess] = useState(false)
   const router = useRouter()
 
+  const supabase = useMemo(() =>
+    createBrowserClient(
+      process.env.NEXT_PUBLIC_SUPABASE_URL!,
+      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+    ), []
+  )
+
   const handleNextStep = (e: React.FormEvent) => {
     e.preventDefault()
     if (!name || !email || !password) {
@@ -89,7 +95,6 @@ export default function RegisterPage() {
     setError('')
 
     try {
-      const [supabase] = useState(() => createClient())
       const { error: signUpError } = await supabase.auth.signUp({
         email,
         password,
