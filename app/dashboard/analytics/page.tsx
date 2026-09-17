@@ -1,6 +1,6 @@
 
 'use client'
-
+import React from 'react'
 import { useState } from 'react'
 import {
   MessageSquare,
@@ -254,7 +254,7 @@ export default function AnalyticsPage() {
                     />
                   )
                   return acc
-                }, [] as JSX.Element[])}
+                }, [] as React.ReactElement[])}
               </svg>
               <div className="absolute inset-0 flex flex-col items-center justify-center">
                 <span className="text-xl font-bold" style={{ color: 'var(--flowup-slate)' }}>

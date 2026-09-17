@@ -21,6 +21,7 @@ import {
   Check,
   ArrowRight,
   ChevronRight,
+  X, 
 } from 'lucide-react'
 
 const tabs = [
