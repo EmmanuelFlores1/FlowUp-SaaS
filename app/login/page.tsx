@@ -32,12 +32,12 @@ export default function LoginPage() {
     })
 
     if (error) {
-      setError(error.message)
-      setLoading(false)
-    } else {
-      router.push('/dashboard')
-    }
-  }
+  setError(error.message)
+  setLoading(false)
+} else {
+  window.location.href = '/dashboard'
+}
+
 
   return (
     <div className="min-h-screen flex items-center justify-center p-4"
