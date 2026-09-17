@@ -5,6 +5,7 @@ import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import {
+  LayoutDashboard,
   MessageSquare,
   Users,
   Zap,
@@ -17,6 +18,7 @@ import {
 } from 'lucide-react'
 
 const menuItems = [
+  { name: 'Dashboard', href: '/dashboard', icon: LayoutDashboard, exact: true },
   { name: 'Inbox', href: '/dashboard/inbox', icon: MessageSquare },
   { name: 'Contactos', href: '/dashboard/contacts', icon: Users },
   { name: 'Automatizaciones', href: '/dashboard/automations', icon: Zap },
@@ -105,8 +107,8 @@ export default function DashboardLayout({
         {/* Menú */}
         <nav className="flex-1 px-3 py-4 space-y-1 overflow-y-auto">
           {menuItems.map((item) => {
-            const isActive = pathname.startsWith(item.href)
-            return (
+            const isActive = item.exact ? pathname === item.href : pathname.startsWith(item.href)
+          return (
               <Link
                 key={item.name}
                 href={item.href}
