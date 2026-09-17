@@ -1,10 +1,17 @@
 
 'use client'
 
-import { useState, useMemo } from 'react'
+import { useState, useRef } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { createBrowserClient } from '@supabase/ssr'
+
+function getSupabase() {
+  return createBrowserClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+  )
+}
 
 export default function LoginPage() {
   const [email, setEmail] = useState('')
@@ -13,18 +20,12 @@ export default function LoginPage() {
   const [loading, setLoading] = useState(false)
   const router = useRouter()
 
-  const supabase = useMemo(() =>
-    createBrowserClient(
-      process.env.NEXT_PUBLIC_SUPABASE_URL!,
-      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-    ), []
-  )
-
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault()
     setLoading(true)
     setError('')
 
+    const supabase = getSupabase()
     const { error } = await supabase.auth.signInWithPassword({
       email,
       password,
