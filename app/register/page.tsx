@@ -88,7 +88,7 @@ export default function RegisterPage() {
     setError('')
 
     try {
-      const supabase = createClient()
+      const [supabase] = useState(() => createClient())
       const { error: signUpError } = await supabase.auth.signUp({
         email,
         password,
